@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>여보야 나 배고파 🥺🍽️</title>
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #fff8eb 0%, #ffe8d6 50%, #ffd8be 100%);
+      overflow: hidden;
+      position: relative;
+      padding: 20px;
+    }
+
+    /* 메인 카드 */
+    .card {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 32px 26px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(255, 138, 76, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      z-index: 10;
+      position: relative;
+      transition: all 0.4s ease;
+    }
+
+    .gif-box {
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 18px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      background: #fff5eb;
+    }
+
+    .gif-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #fff0e6;
+      color: #f76707;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: 22px;
+      color: #2b2d42;
+      line-height: 1.45;
+      margin-bottom: 10px;
+      word-break: keep-all;
+    }
+
+    p.sub {
+      font-size: 15px;
+      color: #6c757d;
+      line-height: 1.6;
+      margin-bottom: 26px;
+      word-break: keep-all;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+      min-height: 50px;
+    }
+
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 14px 22px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    #yesBtn {
+      background: linear-gradient(135deg, #ff922b 0%, #f76707 100%);
+      color: white;
+      box-shadow: 0 6px 15px rgba(247, 103, 7, 0.3);
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.05);
+    }
+
+    #noBtn {
+      background: #e9ecef;
+      color: #495057;
+      position: relative;
+      transition: all 0.15s ease;
+    }
+
+    /* 2단계: 메뉴 선택 폼 */
+    .hidden {
+      display: none;
+    }
+
+    .option-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 16px;
+      border: 2px solid #f1f3f5;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 14px;
+      font-weight: 600;
+      color: #343a40;
+    }
+
+    .option-item:hover {
+      border-color: #ffc078;
+      background: #fff9f2;
+    }
+
+    .option-item input[type="radio"] {
+      accent-color: #f76707;
+      width: 18px;
+      height: 18px;
+    }
+
+    textarea {
+      width: 100%;
+      border: 2px solid #f1f3f5;
+      border-radius: 14px;
+      padding: 12px;
+      font-size: 14px;
+      resize: none;
+      height: 70px;
+      margin-bottom: 16px;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: #ff922b;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #ff922b 0%, #f76707 100%);
+      color: white;
+      box-shadow: 0 6px 15px rgba(247, 103, 7, 0.3);
+    }
+
+    /* 3단계: 완료 화면 */
+    .heart-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <!-- 1단계: 배고픔 호소 & 질문 -->
+    <div id="step1">
+      <div class="gif-box">
+        <img src="hungry.gif" alt="배고픈 움짤" />
+      </div>
+      <span class="badge">🚨 꼬르륵 경보 발령 🚨</span>
+      <h1>여보야,<br>나 지금 너무 배고파...<br>맛있는 거 먹으러 갈래? 🥺</h1>
+      <p class="sub">여보랑 같이 밥 먹어야 힘이 날 것 같아!<br>얼른 맛있는 거 먹으러 가자 🍽️</p>
+      <div class="btn-group">
+        <button id="yesBtn">당연하지, 밥 먹자! 🍖</button>
+        <button id="noBtn">음.. 안 배고픈데?</button>
+      </div>
+    </div>
+
+    <!-- 2단계: 음식 메뉴 선택 & Formspree 전송 -->
+    <div id="step2" class="hidden">
+      <span class="badge">😋 메뉴 고르기</span>
+      <h1>역시 여보밖에 없어! 🥰<br>오늘 뭐 먹고 싶어?</h1>
+      <p class="sub">고르면 민기한테 바로 주문이 들어가!</p>
+
+      <form id="foodForm" action="https://formspree.io/f/xnjkyego" method="POST">
+        <div class="option-list">
+          <label class="option-item">
+            <input type="radio" name="오늘메뉴" value="육즙 가득 삼겹살 & 고기 파티" checked />
+            🥩 육즙 가득 삼겹살 & 고기 파티
+          </label>
+          <label class="option-item">
+            <input type="radio" name="오늘메뉴" value="뜨끈뜨끈 국물 요리 (전골/샤브샤브)" />
+            🍲 뜨끈뜨끈 국물 요리 (전골/샤브샤브)
+          </label>
+          <label class="option-item">
+            <input type="radio" name="오늘메뉴" value="분위기 좋은 파스타 & 양식 데이트" />
+            🍝 분위기 좋은 파스타 & 피자
+          </label>
+          <label class="option-item">
+            <input type="radio" name="오늘메뉴" value="매콤달콤 야식 (치킨/떡볶이)" />
+            🍗 매콤달콤 치킨 & 떡볶이
+          </label>
+        </div>
+
+        <textarea name="하고싶은말" placeholder="따로 먹고 싶은 메뉴나 가고 싶은 맛집이 있으면 적어줘!"></textarea>
+
+        <button type="submit" class="submit-btn">민기에게 메뉴 전송하기 💌</button>
+      </form>
+    </div>
+
+    <!-- 3단계: 전송 완료 화면 -->
+    <div id="step3" class="hidden">
+      <div class="heart-icon">🍽️❤️</div>
+      <h1>메뉴 접수 완료!</h1>
+      <p class="sub">여보가 고른 맛있는 음식<br>민기가 당장 대령하겠습니다!<br>사랑해 여보야 ❤️</p>
+    </div>
+  </div>
+
+  <script>
+    // 도망가는 NO 버튼 (PC 마우스 + 모바일 터치 대응)
+    const noBtn = document.getElementById('noBtn');
+    const noTexts = ['어딜 눌러! 배고프단 말이야 😭', '못 누르지롱~', '밥 먹자 버튼 눌러줘!', '거절은 거절한다 🍚'];
+    let textIdx = 0;
+
+    function moveNoButton() {
+      const maxX = window.innerWidth - noBtn.offsetWidth - 40;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 40;
+      const randomX = Math.max(20, Math.floor(Math.random() * maxX));
+      const randomY = Math.max(20, Math.floor(Math.random() * maxY));
+
+      noBtn.style.position = 'fixed';
+      noBtn.style.left = randomX + 'px';
+      noBtn.style.top = randomY + 'px';
+      noBtn.style.zIndex = '999';
+      noBtn.textContent = noTexts[textIdx % noTexts.length];
+      textIdx++;
+    }
+
+    noBtn.addEventListener('mouseover', moveNoButton);
+    noBtn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    // YES 버튼 클릭 시 2단계로 전환
+    const yesBtn = document.getElementById('yesBtn');
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+
+    yesBtn.addEventListener('click', () => {
+      noBtn.style.display = 'none';
+      step1.classList.add('hidden');
+      step2.classList.remove('hidden');
+    });
+
+    // Formspree 비동기 전송
+    const foodForm = document.getElementById('foodForm');
+    foodForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(foodForm);
+
+      try {
+        const response = await fetch(foodForm.action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          step2.classList.add('hidden');
+          step3.classList.remove('hidden');
+        } else {
+          alert('전송 중 오류가 발생했어요! 다시 시도해 주세요.');
+        }
+      } catch (error) {
+        alert('네트워크 오류가 발생했어요. 다시 시도해 주세요!');
+      }
+    });
+  </script>
+</body>
+</html>
